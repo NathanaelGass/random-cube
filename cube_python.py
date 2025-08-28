@@ -79,6 +79,11 @@ cards = cards[~cards['type_line'].str.contains('Planeswalker', na=False)]
 
 print("Removing cards that rely on other cards or multiples...")
 cards = cards[~cards['oracle_text'].str.contains('named', na=False)]
+cards = cards[~cards['oracle_text'].str.contains('same name', na=False)]
+cards = cards[~cards['oracle_text'].str.contains('Enchant planeswalker', na=False)]
+cards = cards[~cards['oracle_text'].str.contains('initiative', na=False)]
+cards = cards[~cards['oracle_text'].str.contains('dungeon', na=False)]
+cards = cards[~cards['oracle_text'].str.contains('Ripple 4', na=False)]
 
 print("Applying price filter...")
 cards = cards[cards['prices'].apply(
