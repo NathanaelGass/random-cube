@@ -76,6 +76,15 @@ cards = cards[cards['legalities'].apply(lambda x: x.get('vintage') == 'legal')]
 
 print("Filtering cards by supertype...")
 cards = cards[~cards['type_line'].str.contains('Planeswalker', na=False)]
+cards = cards[~cards['type_line'].str.contains('Background', na=False)]
+
+def mentions_planeswalker_unqualified(text):
+    if not isinstance(text, str):
+        return False
+    # Matches "planeswalker" not immediately preceded by "or "
+    return re.search(r"(?<!or )planeswalker", text, re.IGNORECASE) is not None
+
+cards = cards[~cards['oracle_text'].apply(mentions_planeswalker_unqualified)]
 
 print("Removing cards that rely on other cards or multiples...")
 cards = cards[~cards['oracle_text'].str.contains('named', na=False)]
