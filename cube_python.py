@@ -12,7 +12,7 @@ TRI_COLOR_AMOUNT = 2
 FIVE_COLOR_AMOUNT = 5
 LAND_AMOUNT = 65
 
-INTERACTION_MINIMUM = 15 # This is per color
+INTERACTION_MINIMUM = 17 # This is per color
 
 HIGHEST_PRICE = 1.00
 
@@ -68,7 +68,9 @@ sets_to_exclude = [
     "rex",
     "acr",
     "spm",
-    "unf"
+    "unf",
+    "ltc",
+    "sld"
 ]
 
 print("Filtering cards by legality...")
@@ -77,6 +79,8 @@ cards = cards[cards['legalities'].apply(lambda x: x.get('vintage') == 'legal')]
 print("Filtering cards by supertype...")
 cards = cards[~cards['type_line'].str.contains('Planeswalker', na=False)]
 cards = cards[~cards['type_line'].str.contains('Background', na=False)]
+cards = cards[~cards['type_line'].str.contains('Snow', na=False)]
+cards = cards[~cards['type_line'].str.contains('Lesson', na=False)]
 
 def mentions_planeswalker_unqualified(text):
     if not isinstance(text, str):
@@ -93,6 +97,13 @@ cards = cards[~cards['oracle_text'].str.contains('Enchant planeswalker', na=Fals
 cards = cards[~cards['oracle_text'].str.contains('initiative', na=False)]
 cards = cards[~cards['oracle_text'].str.contains('dungeon', na=False)]
 cards = cards[~cards['oracle_text'].str.contains('Ripple 4', na=False)]
+cards = cards[~cards['oracle_text'].str.contains('monarch', na=False)]
+cards = cards[~cards['oracle_text'].str.contains('Partner with', na=False)]
+cards = cards[~cards['oracle_text'].str.contains('Background', na=False)]
+
+cards = cards[~cards['oracle_text'].str.contains('Mutate', na=False)]
+cards = cards[~cards['oracle_text'].str.contains('Learn', na=False)]
+cards = cards[~cards['oracle_text'].str.contains('tempts you', na=False)]
 
 print("Applying price filter...")
 cards = cards[cards['prices'].apply(
