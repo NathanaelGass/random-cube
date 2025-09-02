@@ -15,6 +15,7 @@ At the end of execution, the script exports to a 'cube.csv' file that can be dir
 - Python installed.
 - Pandas.
 - The downloaded **Oracle Cards** bulk data from Scryfall.
+- Rename the bulk data to oracle_cards.json
 - This script downloaded or copied.
 
 ##### Running:
